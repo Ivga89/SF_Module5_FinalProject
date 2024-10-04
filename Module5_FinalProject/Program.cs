@@ -56,5 +56,10 @@
         return true;
     }
 
+    static bool IsValidYesNo(string input)
+    {
+
+    }
+
     
 }
