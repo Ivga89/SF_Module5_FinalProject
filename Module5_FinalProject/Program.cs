@@ -10,7 +10,7 @@
         string name;
         string lastName;
         int age;
-        int countOfPets;
+        int numberOfPets;
         int countOfColors;
         string[] petNames = null;
         string[] favorColors = null;
@@ -37,10 +37,19 @@
         {
             Console.WriteLine("Do you have a pet? ");
         } while ( !IsValidYesNo(Console.ReadLine(), out hasPet) );
+
         if (hasPet)
+        { do
+            {
+                Console.WriteLine("Enter the number of your pets: ");
+            } while (!int.TryParse(Console.ReadLine(), out numberOfPets) || (!IsValidNumber(numberOfPets)));
+            petNames = PetNames(numberOfPets);
+        } 
+
+        do
         {
-            Console.WriteLine()
-        }
+            Console.WriteLine("Do you have favorite color?");
+        } while ( !)
     }
 
 
@@ -70,17 +79,17 @@
         return true;
     }
 
-    static bool IsValidYesNo(string input, out bool hasPet)
+    static bool IsValidYesNo(string input, out bool result)
     {
-        hasPet = false;
+        result = false;
         if (input.ToLower() == "yes")
         {
-            hasPet = true;
+            result = true;
             return true;
         }
         else if (input.ToLower() == "no")
         {
-            hasPet = false;
+            result = false;
             return true;
         }
         else
@@ -90,5 +99,30 @@
         }
     }
 
+    static string[] PetNames(int numberOfPets)
+    {
+        string[] petNames = new string[numberOfPets];
+        for (int i = 0; i < numberOfPets; i++)
+        {
+            do
+            {
+                Console.WriteLine("Enter the name of pet {0}: ", petNames[i]);
+            } while (!IsValidString(petNames[i]));
+        }
+        return petNames;
+    }
+
+    static string[] ColorNames(int numberOfColors)
+    {
+        string[] colorNames = new string[numberOfColors];
+        for (int i = 0; i < numberOfColors; i++)
+        {
+            do
+            {
+                Console.WriteLine("Enter the name of color {0}: ", colorNames[i]);
+            } while (!IsValidString(colorNames[i]));
+        }
+        return colorNames;
+    }
     
 }
