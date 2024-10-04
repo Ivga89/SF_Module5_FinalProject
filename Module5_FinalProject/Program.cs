@@ -3,6 +3,7 @@
     private static void Main(string[] args)
     {
         var userData = CollectUserData();
+        UserDataOutput(userData);
     }
 
     static (string name, string lastName, int age, string[] petNames, string[] favorColors) CollectUserData()
@@ -27,7 +28,7 @@
         {
             Console.WriteLine("Enter your last name");
             lastName = Console.ReadLine();
-        } while (IsValidString(lastName));
+        } while (!IsValidString(lastName));
 
         do
         {
@@ -38,11 +39,13 @@
         {
             Console.WriteLine("Do you have a pet? ");
         } while ( !IsValidYesNo(Console.ReadLine(), out hasPet) );
+
         if (hasPet)
         { do
             {
                 Console.WriteLine("Enter the number of your pets: ");
-            } while (!int.TryParse(Console.ReadLine(), out numberOfPets) || (!IsValidNumber(numberOfPets)));
+            } while ( !int.TryParse(Console.ReadLine(), out numberOfPets) || !IsValidNumber(numberOfPets) );/////////
+
             petNames = PetNames(numberOfPets);
         }
 
@@ -62,16 +65,9 @@
         return (name, lastName, age, petNames, favorColors);
     }
 
-
-
-
-
-
-
-
     static bool IsValidString(string input)
     {
-        if (string.IsNullOrEmpty(input))
+        if (string.IsNullOrWhiteSpace(input))
         {
             Console.WriteLine("Incorrect input, try one more time: ");
             return false;
@@ -99,7 +95,6 @@
         }
         else if (input.ToLower() == "no")
         {
-            result = false;
             return true;
         }
         else
@@ -116,7 +111,8 @@
         {
             do
             {
-                Console.WriteLine("Enter the name of pet {0}: ", petNames[i]);
+                Console.WriteLine("Enter the name of pet {0}", i + 1);
+                petNames[i] = Console.ReadLine();
             } while (!IsValidString(petNames[i]));
         }
         return petNames;
@@ -129,10 +125,45 @@
         {
             do
             {
-                Console.WriteLine("Enter the name of color {0}: ", colorNames[i]);
+                Console.WriteLine("Enter the name of color {0}", i + 1);
+                colorNames[i] = Console.ReadLine();
             } while (!IsValidString(colorNames[i]));
         }
         return colorNames;
     }
     
+    static void UserDataOutput ((string name, string lastName, int age, string[] petNames, string[] colorNames) UserData)
+    {
+        Console.WriteLine();
+        Console.WriteLine("Name: {0}", UserData.name);
+        Console.WriteLine("Last Name: {0}", UserData.lastName);
+        Console.WriteLine("Age: {0}", UserData.age);
+
+        Console.Write("Pets: ");
+        if (UserData.petNames != null)
+        {
+            foreach (var petName in UserData.petNames)
+            {
+                Console.Write(petName + " ");
+            }
+        } else
+        {
+            Console.WriteLine("Have no pets");
+        }
+
+        Console.Write("\nFavorite Colors: ");
+        if (UserData.colorNames != null)
+        {
+            foreach (var colorName in UserData.colorNames)
+            {
+                Console.Write(colorName + " ");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Have no favorite colors");
+        }
+        Console.WriteLine();
+
+    }
 }
