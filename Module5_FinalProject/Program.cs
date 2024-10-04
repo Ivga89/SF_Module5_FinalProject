@@ -11,9 +11,10 @@
         string lastName;
         int age;
         int numberOfPets;
-        int countOfColors;
+        int numberOfColors;
         string[] petNames = null;
         string[] favorColors = null;
+        bool hasFavorColor;
         bool hasPet;
 
         do
@@ -37,19 +38,28 @@
         {
             Console.WriteLine("Do you have a pet? ");
         } while ( !IsValidYesNo(Console.ReadLine(), out hasPet) );
-
         if (hasPet)
         { do
             {
                 Console.WriteLine("Enter the number of your pets: ");
             } while (!int.TryParse(Console.ReadLine(), out numberOfPets) || (!IsValidNumber(numberOfPets)));
             petNames = PetNames(numberOfPets);
-        } 
+        }
 
         do
         {
             Console.WriteLine("Do you have favorite color?");
-        } while ( !)
+        } while ( !IsValidYesNo(Console.ReadLine(), out hasFavorColor) );
+        if (hasFavorColor)
+        {
+            do
+            {
+                Console.WriteLine("Enter the number of favorite colors: ");
+            } while ( !int.TryParse(Console.ReadLine(), out numberOfColors) || (!IsValidNumber(numberOfColors)) );
+            favorColors = FavorColorNames(numberOfColors);
+        }
+
+        return (name, lastName, age, petNames, favorColors);
     }
 
 
@@ -112,7 +122,7 @@
         return petNames;
     }
 
-    static string[] ColorNames(int numberOfColors)
+    static string[] FavorColorNames(int numberOfColors)
     {
         string[] colorNames = new string[numberOfColors];
         for (int i = 0; i < numberOfColors; i++)
