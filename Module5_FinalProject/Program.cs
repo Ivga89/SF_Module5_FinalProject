@@ -32,7 +32,21 @@
         {
             Console.WriteLine("Enter your age: ");
         } while (!int.TryParse(Console.ReadLine(), out age) || (!IsValidNumber(age)));
+
+        do
+        {
+            Console.WriteLine("Do you have a pet? ");
+        } while ( !IsValidYesNo(Console.ReadLine(), out hasPet) );
+        if (hasPet)
+        {
+            Console.WriteLine()
+        }
     }
+
+
+
+
+
 
 
 
@@ -56,9 +70,24 @@
         return true;
     }
 
-    static bool IsValidYesNo(string input)
+    static bool IsValidYesNo(string input, out bool hasPet)
     {
-
+        hasPet = false;
+        if (input.ToLower() == "yes")
+        {
+            hasPet = true;
+            return true;
+        }
+        else if (input.ToLower() == "no")
+        {
+            hasPet = false;
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("Incorrect input, try one more time: ");
+            return false;
+        }
     }
 
     
